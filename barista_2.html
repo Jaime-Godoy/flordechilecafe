@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos - Flor de Chile Café</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cafe: '#4A3B32',
+                        crema: '#F5F5F0',
+                        acento: '#8B7355'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-crema text-gray-800 font-sans h-screen flex flex-col md:flex-row overflow-hidden">
+
+    <!-- SECCIÓN DE TOMA DE PEDIDOS -->
+    <div class="w-full md:w-2/3 h-full flex flex-col border-r border-gray-300">
+        
+        <!-- Header -->
+        <header class="bg-cafe text-white p-4 shadow-md">
+            <h1 class="text-xl font-bold tracking-wide">Flor de Chile Café - Toma de Pedidos</h1>
+        </header>
+
+        <!-- Selección de Ubicación -->
+        <div class="p-4 border-b border-gray-300 bg-white">
+            <h2 class="text-sm font-semibold text-gray-500 mb-2 uppercase tracking-wider">1. Ubicación</h2>
+            <div class="flex flex-wrap gap-2" id="botones-ubicacion">
+                <button onclick="seleccionarUbicacion('Mesa 1')" class="ubicacion-btn bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-md transition text-sm">Mesa 1</button>
+                <button onclick="seleccionarUbicacion('Mesa 2')" class="ubicacion-btn bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-md transition text-sm">Mesa 2</button>
+                <button onclick="seleccionarUbicacion('Mesa 3')" class="ubicacion-btn bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-md transition text-sm">Mesa 3</button>
+                <button onclick="seleccionarUbicacion('Barra')" class="ubicacion-btn bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-md transition text-sm">Barra</button>
+                <button onclick="seleccionarUbicacion('Para Llevar')" class="ubicacion-btn bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-md transition text-sm">Para Llevar</button>
+            </div>
+            <p id="ubicacion-actual" class="mt-2 text-sm font-medium text-acento">Ninguna ubicación seleccionada</p>
+
+            <div class="mt-3">
+                <label for="nombre-cliente" class="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wider">Nombre del cliente (opcional)</label>
+                <input type="text" id="nombre-cliente" placeholder="Ej: Sofía" maxlength="30"
+                    class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-acento focus:border-acento">
+            </div>
+        </div>
+
+        <!-- Menú de Productos -->
+        <div class="p-4 flex-1 overflow-y-auto bg-gray-50">
+            <h2 class="text-sm font-semibold text-gray-500 mb-3 uppercase tracking-wider">2. Productos</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                <!-- Cafetería -->
+                <button onclick="agregarAlCarrito('Expresso', 1900)" class="bg-white p-3 rounded-lg shadow-sm border border-gray-200 hover:border-acento hover:shadow-md transition text-left">
+                    <p class="font-bold text-gray-700">Expresso</p>
+                    <p class="text-sm text-gray-500">$1.900</p>
+                </button>
+                <button onclick="agregarAlCarrito('Expresso Doble', 2500)" class="bg-white p-3 rounded-lg shadow-sm border border-gray-200 hover:border-acento hover:shadow-md transition text-left">
+                    <p class="font-bold text-gray-700">Expresso Doble</p>
+                    <p class="text-sm text-gray-500">$2.500</p>
+                </button>
+                <button onclick="agregarAlCarrito('Americano', 2000)" class="bg-white p-3 rounded-lg shadow-sm border border-gray-200 hover:border-acento hover:shadow-md transition text-left">
+                    <p class="font-bold text-gray-700">Americano</p>
+                    <p class="text-sm text-gray-500">$2.000</p>
+                </button>
+                <button onclick="agregarAlCarrito('Capuccino', 2200)" class="bg-white p-3 rounded-lg shadow-sm border border-gray-200 hover:border-acento hover:shadow-md transition text-left">
+                    <p class="font-bold text-gray-700">Capuccino</p>
+                    <p class="text-sm text-gray-500">$2.200</p>
+                </button>
+                <button onclick="agregarAlCarrito('Capuccino + Sabor', 2500)" class="bg-white p-3 rounded-lg shadow-sm border border-gray-200 hover:border-acento hover:shadow-md transition text-left">
+                    <p class="font-bold text-gray-700">Capuccino + Sabor</p>
+                    <p class="text-sm text-gray-500">$2.500</p>
+                </button>
+                <button onclick="agregarAlCarrito('Chai Latte', 1400)" class="bg-white p-3 rounded-lg shadow-sm border border-gray-200 hover:border-acento hover:shadow-md transition text-left">
+                    <p class="font-bold text-gray-700">Chai Latte</p>
+                    <p class="text-sm text-gray-500">$1.400</p>
+                </button>
+                <button onclick="agregarAlCarrito('Chocolate Caliente', 1600)" class="bg-white p-3 rounded-lg shadow-sm border border-gray-200 hover:border-acento hover:shadow-md transition text-left">
+                    <p class="font-bold text-gray-700">Chocolate Cal.</p>
+                    <p class="text-sm text-gray-500">$1.600</p>
+                </button>
+                
+                <!-- Comida y Bebidas -->
+                <button onclick="agregarAlCarrito('Sopaipilla', 350)" class="bg-white p-3 rounded-lg shadow-sm border border-gray-200 hover:border-acento hover:shadow-md transition text-left">
+                    <p class="font-bold text-gray-700">Sopaipilla (1)</p>
+                    <p class="text-sm text-gray-500">$350</p>
+                </button>
+                <button onclick="agregarAlCarrito('Promo 3 Sopaipillas', 1000)" class="bg-white p-3 rounded-lg shadow-sm border border-gray-200 hover:border-acento hover:shadow-md transition text-left bg-orange-50">
+                    <p class="font-bold text-gray-700">3 Sopaipillas</p>
+                    <p class="text-sm text-gray-500">$1.000</p>
+                </button>
+                <button onclick="agregarAlCarrito('Galletas (Triton/Frac/etc)', 1000)" class="bg-white p-3 rounded-lg shadow-sm border border-gray-200 hover:border-acento hover:shadow-md transition text-left">
+                    <p class="font-bold text-gray-700">Paquete Galletas</p>
+                    <p class="text-sm text-gray-500">$1.000</p>
+                </button>
+                <button onclick="agregarAlCarrito('Jugo en Caja', 600)" class="bg-white p-3 rounded-lg shadow-sm border border-gray-200 hover:border-acento hover:shadow-md transition text-left">
+                    <p class="font-bold text-gray-700">Jugo en Caja</p>
+                    <p class="text-sm text-gray-500">$600</p>
+                </button>
+                <button onclick="agregarAlCarrito('Jugo en Botella', 1300)" class="bg-white p-3 rounded-lg shadow-sm border border-gray-200 hover:border-acento hover:shadow-md transition text-left">
+                    <p class="font-bold text-gray-700">Jugo Botella</p>
+                    <p class="text-sm text-gray-500">$1.300</p>
+                </button>
+            </div>
+        </div>
+
+        <!-- Resumen del Pedido (Carrito) -->
+        <div class="bg-white p-4 border-t border-gray-300 h-1/3 flex flex-col">
+            <h2 class="text-sm font-semibold text-gray-500 mb-2 uppercase tracking-wider">Orden Actual</h2>
+            <ul id="lista-carrito" class="flex-1 overflow-y-auto mb-2 text-sm divide-y divide-gray-100">
+                <li class="text-gray-400 italic py-2">El pedido está vacío...</li>
+            </ul>
+            <div class="flex justify-between items-center pt-2 border-t border-gray-200 font-bold text-lg">
+                <span>Total:</span>
+                <span id="total-carrito">$0</span>
+            </div>
+            <button onclick="enviarPedido()" class="mt-3 w-full bg-cafe hover:bg-acento text-white font-bold py-3 rounded-md transition shadow-md">
+                Enviar a Preparación
+            </button>
+        </div>
+    </div>
+
+    <!-- SECCIÓN DEL BARISTA (LISTA DE ESPERA) -->
+    <div class="w-full md:w-1/3 h-full bg-gray-100 flex flex-col">
+        <header class="bg-gray-800 text-white p-4 shadow-md flex justify-between items-center">
+            <h1 class="text-xl font-bold tracking-wide">Comandas (Barista)</h1>
+            <span id="contador-pedidos" class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">0</span>
+        </header>
+
+        <!-- Tabs -->
+        <div class="flex border-b border-gray-300 bg-gray-200">
+            <button onclick="cambiarVista('pendientes')" id="tab-pendientes" class="flex-1 py-2 text-sm font-semibold uppercase tracking-wider bg-gray-800 text-white transition">Pendientes</button>
+            <button onclick="cambiarVista('historial')" id="tab-historial" class="flex-1 py-2 text-sm font-semibold uppercase tracking-wider bg-gray-200 text-gray-600 hover:bg-gray-300 transition">Historial</button>
+        </div>
+
+        <div class="p-4 flex-1 overflow-y-auto" id="lista-comandas">
+            <p class="text-gray-500 text-center mt-10 italic">No hay pedidos pendientes.</p>
+        </div>
+
+        <div class="p-4 flex-1 overflow-y-auto hidden" id="lista-historial">
+            <p class="text-gray-500 text-center mt-10 italic">Aún no hay pedidos completados.</p>
+        </div>
+    </div>
+
+    <script>
+        // ESTADO DE LA APLICACIÓN
+        let ubicacionSeleccionada = null;
+        let carrito = [];
+        let total = 0;
+        let colaPedidos = [];
+        let historialPedidos = [];
+        let numeroPedidoGlobal = 1;
+        let vistaActual = 'pendientes';
+
+        // FUNCIONES DE UI Y LÓGICA
+        function seleccionarUbicacion(nombre) {
+            ubicacionSeleccionada = nombre;
+            document.getElementById('ubicacion-actual').innerText = `Selección: ${nombre}`;
+            document.getElementById('ubicacion-actual').classList.remove('text-red-500');
+            
+            // Estilos de botones
+            document.querySelectorAll('.ubicacion-btn').forEach(btn => {
+                btn.classList.remove('bg-acento', 'text-white');
+                btn.classList.add('bg-gray-200');
+            });
+            event.target.classList.remove('bg-gray-200');
+            event.target.classList.add('bg-acento', 'text-white');
+        }
+
+        function agregarAlCarrito(nombre, precio) {
+            carrito.push({ nombre, precio });
+            actualizarCarrito();
+        }
+
+        function actualizarCarrito() {
+            const lista = document.getElementById('lista-carrito');
+            lista.innerHTML = '';
+            total = 0;
+
+            if (carrito.length === 0) {
+                lista.innerHTML = '<li class="text-gray-400 italic py-2">El pedido está vacío...</li>';
+            } else {
+                carrito.forEach((item, index) => {
+                    total += item.precio;
+                    lista.innerHTML += `
+                        <li class="py-2 flex justify-between items-center">
+                            <span>${item.nombre}</span>
+                            <div class="flex items-center gap-3">
+                                <span class="font-medium">$${item.precio}</span>
+                                <button onclick="eliminarDelCarrito(${index})" class="text-red-400 hover:text-red-600 font-bold text-lg">&times;</button>
+                            </div>
+                        </li>
+                    `;
+                });
+            }
+            document.getElementById('total-carrito').innerText = `$${total}`;
+        }
+
+        function eliminarDelCarrito(index) {
+            carrito.splice(index, 1);
+            actualizarCarrito();
+        }
+
+        function enviarPedido() {
+            if (!ubicacionSeleccionada) {
+                const msj = document.getElementById('ubicacion-actual');
+                msj.innerText = '¡ATENCIÓN: Debes seleccionar una ubicación primero!';
+                msj.classList.add('text-red-500');
+                return;
+            }
+            if (carrito.length === 0) {
+                alert("No puedes enviar un pedido vacío.");
+                return;
+            }
+
+            // Crear el objeto del pedido
+            const hora = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const nombreClienteInput = document.getElementById('nombre-cliente');
+            const nombreCliente = nombreClienteInput.value.trim();
+            const nuevoPedido = {
+                id: numeroPedidoGlobal++,
+                ubicacion: ubicacionSeleccionada,
+                nombreCliente: nombreCliente,
+                items: [...carrito],
+                hora: hora
+            };
+
+            colaPedidos.push(nuevoPedido);
+            
+            // Limpiar toma de pedidos
+            carrito = [];
+            ubicacionSeleccionada = null;
+            nombreClienteInput.value = '';
+            document.getElementById('ubicacion-actual').innerText = 'Ninguna ubicación seleccionada';
+            document.querySelectorAll('.ubicacion-btn').forEach(btn => {
+                btn.classList.remove('bg-acento', 'text-white');
+                btn.classList.add('bg-gray-200');
+            });
+            actualizarCarrito();
+            actualizarComandas();
+        }
+
+        function actualizarComandas() {
+            const lista = document.getElementById('lista-comandas');
+            document.getElementById('contador-pedidos').innerText = colaPedidos.length;
+            lista.innerHTML = '';
+
+            if (colaPedidos.length === 0) {
+                lista.innerHTML = '<p class="text-gray-500 text-center mt-10 italic">No hay pedidos pendientes.</p>';
+                return;
+            }
+
+            colaPedidos.forEach((pedido, index) => {
+                let itemsHTML = '';
+                pedido.items.forEach(item => {
+                    itemsHTML += `<li class="border-b border-gray-100 py-1 text-sm text-gray-700 flex justify-between"><span>&#8226; ${item.nombre}</span><span class="text-gray-500">$${item.precio}</span></li>`;
+                });
+                const totalPedido = calcularTotalPedido(pedido);
+
+                lista.innerHTML += `
+                    <div class="bg-white rounded-lg shadow-sm border-l-4 border-acento p-4 mb-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <h3 class="font-bold text-gray-800">#${pedido.id} - ${pedido.ubicacion}</h3>
+                                ${pedido.nombreCliente ? `<p class="text-sm font-semibold text-acento">👤 ${pedido.nombreCliente}</p>` : ''}
+                                <p class="text-xs text-gray-500">Ingreso: ${pedido.hora}</p>
+                            </div>
+                            <button onclick="completarPedido(${index})" class="bg-green-600 hover:bg-green-700 text-white text-xs font-bold py-1 px-3 rounded shadow transition">
+                                Listo ✓
+                            </button>
+                        </div>
+                        <ul class="mt-2">
+                            ${itemsHTML}
+                        </ul>
+                        <div class="mt-2 pt-2 border-t border-gray-200 flex justify-between items-center font-bold text-gray-800">
+                            <span>Total:</span>
+                            <span>$${totalPedido}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function calcularTotalPedido(pedido) {
+            return pedido.items.reduce((acc, item) => acc + item.precio, 0);
+        }
+
+        function cambiarVista(vista) {
+            vistaActual = vista;
+            const btnPend = document.getElementById('tab-pendientes');
+            const btnHist = document.getElementById('tab-historial');
+            const panelPend = document.getElementById('lista-comandas');
+            const panelHist = document.getElementById('lista-historial');
+
+            if (vista === 'pendientes') {
+                panelPend.classList.remove('hidden');
+                panelHist.classList.add('hidden');
+                btnPend.classList.add('bg-gray-800', 'text-white');
+                btnPend.classList.remove('bg-gray-200', 'text-gray-600');
+                btnHist.classList.add('bg-gray-200', 'text-gray-600');
+                btnHist.classList.remove('bg-gray-800', 'text-white');
+            } else {
+                panelPend.classList.add('hidden');
+                panelHist.classList.remove('hidden');
+                btnHist.classList.add('bg-gray-800', 'text-white');
+                btnHist.classList.remove('bg-gray-200', 'text-gray-600');
+                btnPend.classList.add('bg-gray-200', 'text-gray-600');
+                btnPend.classList.remove('bg-gray-800', 'text-white');
+            }
+        }
+
+        function actualizarHistorial() {
+            const lista = document.getElementById('lista-historial');
+            lista.innerHTML = '';
+
+            if (historialPedidos.length === 0) {
+                lista.innerHTML = '<p class="text-gray-500 text-center mt-10 italic">Aún no hay pedidos completados.</p>';
+                return;
+            }
+
+            // Mostrar los más recientes primero
+            [...historialPedidos].reverse().forEach((pedido) => {
+                let itemsHTML = '';
+                pedido.items.forEach(item => {
+                    itemsHTML += `<li class="border-b border-gray-100 py-1 text-sm text-gray-600 flex justify-between"><span>&#8226; ${item.nombre}</span><span class="text-gray-400">$${item.precio}</span></li>`;
+                });
+                const totalPedido = calcularTotalPedido(pedido);
+
+                lista.innerHTML += `
+                    <div class="bg-white rounded-lg shadow-sm border-l-4 border-green-500 p-4 mb-4 opacity-90">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <h3 class="font-bold text-gray-700">#${pedido.id} - ${pedido.ubicacion}</h3>
+                                ${pedido.nombreCliente ? `<p class="text-sm font-semibold text-acento">👤 ${pedido.nombreCliente}</p>` : ''}
+                                <p class="text-xs text-gray-500">Ingreso: ${pedido.hora} &middot; Listo: ${pedido.horaCompletado}</p>
+                            </div>
+                            <span class="bg-green-100 text-green-700 text-xs font-bold py-1 px-2 rounded">Completado</span>
+                        </div>
+                        <ul class="mt-2">
+                            ${itemsHTML}
+                        </ul>
+                        <div class="mt-2 pt-2 border-t border-gray-200 flex justify-between items-center font-bold text-gray-700">
+                            <span>Total:</span>
+                            <span>$${totalPedido}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function completarPedido(index) {
+            const [pedido] = colaPedidos.splice(index, 1);
+            pedido.horaCompletado = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            historialPedidos.push(pedido);
+            actualizarComandas();
+            actualizarHistorial();
+        }
+    </script>
+</body>
+</html>
