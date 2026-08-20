@@ -123,4 +123,4 @@ Ideas para futuras versiones:
 
 ---
 
-Hecho con ☕ para **Flor de Chile Café**.
+Hecho con ❤️ para **Flor de Chile Café**.
